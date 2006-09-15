@@ -1,0 +1,14 @@
+# http://module-build.sourceforge.net/META-spec.html
+#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
+name:         Catalyst-Plugin-LogWarnings
+version:      0.01
+version_from: lib/Catalyst/Plugin/LogWarnings.pm
+installdirs:  site
+requires:
+    Catalyst::Plugin::C3:          0
+    Catalyst::Runtime:             5.7001
+    Class::C3:                     0
+    Test::More:                    0
+
+distribution_type: module
+generated_by: ExtUtils::MakeMaker version 6.30_01
