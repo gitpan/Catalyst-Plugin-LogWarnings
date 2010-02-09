@@ -2,8 +2,7 @@ package Catalyst::Plugin::LogWarnings;
 
 use warnings;
 use strict;
-use Class::C3;
-use base qw(Catalyst::Plugin::C3);
+use MRO::Compat;
 
 =head1 NAME
 
@@ -11,11 +10,11 @@ Catalyst::Plugin::LogWarnings - Log perl warnings to your Catalyst log object
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 =head1 SYNOPSIS
 
@@ -54,19 +53,19 @@ C<$SIG{__WARN__}> statement.
 sub execute {
     my $c = shift;
     if(eval{$c->log->can('warn')}){
-	return do {
-	    local $SIG{__WARN__} = sub {
-		my $warning = shift;
-		chomp $warning;
-		$c->log->warn($warning);
+	    return do {
+	        local $SIG{__WARN__} = sub {
+		        my $warning = shift;
+		        chomp $warning;
+		        $c->log->warn($warning);
+	        };
+	        $c->next::method(@_);
 	    };
-	    $c->next::method(@_);
-	}
     }
     else {
-	# warn "Can't log warnings";
-	# if we can't log warnings, don't catch them
-	return $c->next::method(@_);
+	    # warn "Can't log warnings";
+	    # if we can't log warnings, don't catch them
+	    return $c->next::method(@_);
     }
 }
 
